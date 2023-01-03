@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">College App</string>
+    <string name="bold" tools:ignore="ReferenceType">@font/bold</string>
+    <string name="light" tools:ignore="ReferenceType">@font/light</string>
+    <string name="regular" tools:ignore="ReferenceType">@font/regular</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="start">Start</string>
+    <string name="close">Close</string>
+    <string name="about_college">Motilal Nehru National Institute of Technology Allahabad, Prayagraj (MNNIT) is an Institute with total commitment to quality and excellence in academic pursuits. It was established as one of the seventeen Regional Engineering Colleges of India in the year 1961 as a joint enterprise of Government of India and Government of Uttar Pradesh, and was an associated college of University of Allahabad, which is the third oldest university in India. It was the first in the country to start an undergraduate programme in Computer Science and Engineering in 1976 to 77.</string>
+</resources>

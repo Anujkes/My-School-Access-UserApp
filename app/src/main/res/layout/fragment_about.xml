@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.about.AboutFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="fitXY"
+            android:id="@+id/collegeImg"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/light"
+             android:padding="8dp"
+            android:textColor="@color/black"
+            android:text="@string/about_college"
+              />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/text_margin"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_label"/>
+
+            <TextView
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Environment"
+                />
+
+
+
+
+
+
+        </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Branch"
+            android:layout_marginTop="36dp"
+            android:textSize="@dimen/title_size"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/textColor"
+            android:fontFamily="@string/bold"/>
+
+        <androidx.viewpager.widget.ViewPager
+
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="@dimen/text_margin"
+            android:foregroundGravity="center"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+
+            android:id="@+id/viewPager"
+            />
+
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+
+               android:padding="@dimen/text_margin"
+               >
+
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Contact Details"
+                   android:layout_marginTop="36dp"
+
+                   android:textSize="@dimen/title_size"
+                   android:layout_gravity="center_horizontal"
+                   android:textColor="@color/textColor"
+                   android:fontFamily="@string/bold"/>
+
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="🔴  Motilal nehru National Institute Of Technology"
+                   android:layout_marginTop="@dimen/text_margin"
+                   android:layout_marginHorizontal="@dimen/text_margin"
+
+                   android:textSize="18sp"
+
+                   android:textColor="@color/textColor"
+                   android:fontFamily="@string/bold"/>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="🔴  Teliarganj, Allahabad, Uttar Pradesh 211004"
+                   android:layout_marginTop="@dimen/text_margin"
+                   android:layout_marginHorizontal="@dimen/text_margin"
+
+                   android:textSize="18sp"
+                   android:textColor="@color/textColor"
+                   android:fontFamily="@string/bold"/>
+
+
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="🔴  0532 2545404"
+                   android:layout_marginTop="@dimen/text_margin"
+                   android:layout_marginHorizontal="@dimen/text_margin"
+
+                   android:textSize="18sp"
+                   android:textColor="@color/textColor"
+                   android:fontFamily="@string/bold"/>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="🔴  Secretary@mnnit.ac.in"
+                   android:layout_marginTop="@dimen/text_margin"
+                   android:layout_marginHorizontal="@dimen/text_margin"
+
+                   android:textSize="18sp"
+                   android:textColor="@color/textColor"
+                   android:fontFamily="@string/bold"/>
+
+
+
+               <ImageView
+                   android:layout_marginTop="25dp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="230dp"
+                   android:id="@+id/map"
+                   android:src="@drawable/college_map_img"
+                   />
+
+
+
+           </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</androidx.core.widget.NestedScrollView>
