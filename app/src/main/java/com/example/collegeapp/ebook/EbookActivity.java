@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.collegeapp.R;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +28,8 @@ public class EbookActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private List<EbookData> list;
     private EbookAdapter ebookAdapter;
-
+    ShimmerFrameLayout shimmerFrameLayout;
+    LinearLayout shimmerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +38,8 @@ public class EbookActivity extends AppCompatActivity {
 
         ebookRecycler=findViewById(R.id.ebookRecycler);
         reference= FirebaseDatabase.getInstance().getReference().child("Pdf");
-
+        shimmerFrameLayout=findViewById(R.id.shimmer_view_container);
+        shimmerLayout=findViewById(R.id.shimmer_layout);
         getData();
 
 
@@ -59,7 +64,11 @@ public class EbookActivity extends AppCompatActivity {
                 }
                 ebookRecycler.setLayoutManager(new LinearLayoutManager(EbookActivity.this));
                 ebookAdapter=new EbookAdapter(EbookActivity.this,list);
+
                 ebookRecycler.setAdapter(ebookAdapter);
+                shimmerFrameLayout.stopShimmer();
+                shimmerLayout.setVisibility(View.GONE);
+
 
 
 
@@ -70,5 +79,17 @@ public class EbookActivity extends AppCompatActivity {
                 Toast.makeText(EbookActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        shimmerFrameLayout.stopShimmer();
+        super.onPause();
+    }
+
+    @Override
+    protected void onPostResume() {
+        shimmerFrameLayout.startShimmer();
+        super.onPostResume();
     }
 }
