@@ -22,8 +22,11 @@
             android:name="com.example.collegeapp.ebook.PdfViewerActivity"
             android:exported="false" />
         <activity
+
             android:name="com.example.collegeapp.ebook.EbookActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true">

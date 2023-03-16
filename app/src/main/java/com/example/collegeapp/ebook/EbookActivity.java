@@ -34,7 +34,8 @@ public class EbookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ebook);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Ebooks");
 
         ebookRecycler=findViewById(R.id.ebookRecycler);
         reference= FirebaseDatabase.getInstance().getReference().child("Pdf");
