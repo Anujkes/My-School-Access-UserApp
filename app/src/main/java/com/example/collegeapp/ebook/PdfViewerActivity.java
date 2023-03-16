@@ -1,22 +1,8 @@
 package com.example.collegeapp.ebook;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.AsyncTask;
 import android.os.Bundle;
-
 import com.example.collegeapp.R;
-
-import com.google.android.gms.tasks.Task;
-
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 
 public class PdfViewerActivity extends AppCompatActivity {
 
@@ -28,42 +14,16 @@ public class PdfViewerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pdf_viewer);
 
         url=getIntent().getStringExtra("pdfUrl");
-
-//         pdfView=findViewById(R.id.pdfView);
 //
-//         new PdfDownload().execute(url);
+//        PDFView pdfView = findViewById(R.id.pdfView);
+//        pdfView.fromUri(Uri.parse(url))
+//                .enableSwipe(true)
+//                .swipeHorizontal(false)
+//                .enableDoubletap(true)
+//                .defaultPage(0)
+//                .load();
 
 
     }
 
-//    private class PdfDownload extends AsyncTask<String ,Void,InputStream>
-//    {
-//
-//
-//        @Override
-//        protected InputStream doInBackground(String... strings) {
-//
-//            InputStream inputStream=null;
-//            try {
-//                URL url =new URL(strings[0]);
-//                HttpURLConnection urlConnection= (HttpURLConnection) url.openConnection();
-//
-//                if(urlConnection.getResponseCode()==200) {
-//                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
-//                }
-//
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//
-//            return inputStream;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(InputStream inputStream) {
-//            pdfView.fromStream(inputStream).load();
-//        }
-//    }
 }

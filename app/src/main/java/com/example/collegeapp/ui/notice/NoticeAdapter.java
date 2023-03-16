@@ -3,6 +3,7 @@ package com.example.collegeapp.ui.notice;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,16 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             e.printStackTrace();
         }
 
+        holder.noticeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,Notice_Full_Image_Activity.class);
+                intent.putExtra("image",curItem.getImage());
+                context.startActivity(intent);
+
+
+            }
+        });
 
     }
 
