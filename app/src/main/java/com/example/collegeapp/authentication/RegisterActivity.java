@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.collegeapp.MainActivity;
@@ -33,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference reference ;
     private DatabaseReference dbRef ;
-
+    private TextView click_here_for_login;
 
 
 
@@ -51,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference= database.getReference();
 
+        click_here_for_login=findViewById(R.id.click_here_for_login);
 
         reg_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +64,13 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
+
+        click_here_for_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openLogin();
+            }
+        });
 
 
     }
@@ -177,5 +186,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    private void openLogin() {
 
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
 }
