@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView click_here_for_register;
+    private TextView click_here_for_register,forget_pass;
     private EditText user_email,user_pass;
     private Button login_btn;
     private String email,password;
@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         user_pass=findViewById(R.id.user_pass);
         login_btn=findViewById(R.id.login_btn);
 
+        forget_pass=findViewById(R.id.forget_pass);
         auth=FirebaseAuth.getInstance();
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +67,15 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+   forget_pass.setOnClickListener(new View.OnClickListener() {
+       @Override
+       public void onClick(View view) {
+
+           openForgetPasswordActivity();
+       }
 
 
+   });
 
 
     }
@@ -134,5 +142,10 @@ public class LoginActivity extends AppCompatActivity {
     private void openMain() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    private void openForgetPasswordActivity() {
+        startActivity(new Intent(this, ForgetPasswordActivity.class));
+
     }
 }

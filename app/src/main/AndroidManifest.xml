@@ -16,13 +16,14 @@
         android:theme="@style/Theme.CollegeApp"
         tools:targetApi="31">
         <activity
+            android:name="com.example.collegeapp.authentication.ForgetPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.collegeapp.authentication.LoginActivity"
             android:exported="false" />
         <activity
             android:name="com.example.collegeapp.authentication.RegisterActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name="com.example.collegeapp.ui.notice.Notice_Full_Image_Activity"
             android:exported="false" />
@@ -36,7 +37,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
