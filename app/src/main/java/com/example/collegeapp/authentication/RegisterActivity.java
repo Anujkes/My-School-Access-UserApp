@@ -27,9 +27,9 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText user_email,user_pass,user_name;
+    EditText user_email,user_pass,user_name,user_mobile,user_student_id;
     Button reg_btn;
-    private String name,email,password;
+    private String name,email,password,mobile_no,student_id;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
     private DatabaseReference reference ;
@@ -46,8 +46,13 @@ public class RegisterActivity extends AppCompatActivity {
         user_name=findViewById(R.id.user_name);
         user_email=findViewById(R.id.user_email);
         user_pass=findViewById(R.id.user_pass);
+
+        user_mobile=findViewById(R.id.user_mobile);
+        user_student_id=findViewById(R.id.user_student_id);
+
         reg_btn=findViewById(R.id.reg_btn);
         mAuth = FirebaseAuth.getInstance();
+
 
         database = FirebaseDatabase.getInstance();
         reference= database.getReference();
@@ -74,25 +79,15 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-           openMain();
-        }
-    }
 
-    private void openMain() {
 
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
-    }
+
 
     private void validateData() {
 
         name=user_name.getText().toString();
+        mobile_no=user_mobile.getText().toString();
+        student_id=user_student_id.getText().toString();
         email=user_email.getText().toString();
         password=user_pass.getText().toString();
 
@@ -100,6 +95,16 @@ public class RegisterActivity extends AppCompatActivity {
         {
             user_name.setError("Required");
             user_name.requestFocus();
+        }
+        else if(mobile_no.isEmpty())
+        {
+            user_mobile.setError("Required");
+            user_mobile.requestFocus();
+        }
+        else if(student_id.isEmpty())
+        {
+            user_student_id.setError("Required");
+            user_student_id.requestFocus();
         }
         else if(email.isEmpty())
         {
@@ -129,7 +134,10 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                           uploadData();
+                            {
+//                                Toast.makeText(RegisterActivity.this, "User register via email authentication"+FirebaseAuth.getInstance().getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+                                uploadData();
+                            }
                         } else {
 
                             Toast.makeText(RegisterActivity.this, "Error : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -151,22 +159,41 @@ public class RegisterActivity extends AppCompatActivity {
     private void uploadData() {
 
     dbRef=reference.child("users");
-    String key=dbRef.push().getKey();
 
-        HashMap<String,String>user=new HashMap<>();
-        user.put("key",key);
-        user.put("name",name);
-        user.put("email",email);
 
-        dbRef.child(key).setValue(user)
+
+
+
+        Student student=new Student(name,email,student_id,mobile_no,"no",mAuth.getUid());
+
+        dbRef.child(student_id).setValue(student)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 
-                        if(task.isSuccessful())
-                        {
-                             Toast.makeText(RegisterActivity.this, "Register Successfully :p", Toast.LENGTH_SHORT).show();
-                             openMain();
+                        if(task.isSuccessful()) {
+
+                            Toast.makeText(RegisterActivity.this, "Register Successfully :p.   A request is sent to admin for verification , you will shortly get email for verification status, then you can login , ", Toast.LENGTH_SHORT).show();
+
+
+                             DatabaseReference rf=FirebaseDatabase.getInstance().getReference();
+                             HashMap<String,String> mp=new HashMap<>();
+
+                             mp.put(FirebaseAuth.getInstance().getCurrentUser().getUid(),"no");
+                             rf.child("STATUS").setValue(mp)
+                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                 @Override
+                                                 public void onComplete(@NonNull Task<Void> task) {
+                                                     Toast.makeText(RegisterActivity.this, "Status set", Toast.LENGTH_SHORT).show();
+                                                 }
+                                             });
+
+
+
+
+
+
+                              openLogin();
 
 
                         }
@@ -184,11 +211,18 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
 
+
     }
 
     private void openLogin() {
 
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
+
+    private void openMain() {
+
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

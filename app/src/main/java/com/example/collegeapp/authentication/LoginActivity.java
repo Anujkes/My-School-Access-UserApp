@@ -20,25 +20,40 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView click_here_for_register,forget_pass;
+    private TextView click_here_for_register,forget_pass,user_student_id;
     private EditText user_email,user_pass;
     private Button login_btn;
-    private String email,password;
+    private String email,password,student_id;
     private FirebaseAuth auth;
+    private FirebaseDatabase db;
+    private DatabaseReference ref;
+    private DatabaseReference mRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+         db=FirebaseDatabase.getInstance();
 
+         ref=db.getReference();
 
         click_here_for_register=findViewById(R.id.click_here_for_register);
 
         user_email=findViewById(R.id.user_email);
         user_pass=findViewById(R.id.user_pass);
+        //user_student_id=findViewById(R.id.user_student_id);
+
         login_btn=findViewById(R.id.login_btn);
 
         forget_pass=findViewById(R.id.forget_pass);
@@ -72,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
        public void onClick(View view) {
 
            openForgetPasswordActivity();
+
        }
 
 
@@ -80,7 +96,46 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+       FirebaseAuth auth=FirebaseAuth.getInstance();
+       FirebaseUser user=auth.getCurrentUser();
+
+       if(user!=null)
+       {
+
+           DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("STATUS");
+
+           myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(DataSnapshot dataSnapshot) {
+                   String value = dataSnapshot.getValue(String.class);
+                   // Do something with the value
+                   if(value.equals("yes"))
+                   {
+                      openMain();
+                   }
+
+               }
+
+               @Override
+               public void onCancelled(DatabaseError error) {
+                   // Failed to read value
+               }
+           });
+
+       }
+//
+
+
+
+
+    }
+
     private void openRegister() {
+
         startActivity(new Intent(this,RegisterActivity.class));
         finish();
 
@@ -91,7 +146,14 @@ public class LoginActivity extends AppCompatActivity {
 
         email=user_email.getText().toString();
         password=user_pass.getText().toString();
-
+//        student_id=user_student_id.getText().toString();
+//        if(student_id.isEmpty())
+//        {
+//            user_student_id.setError("Required");
+//            user_student_id.requestFocus();
+//        }
+//       else
+//
         if(email.isEmpty())
         {
             user_email.setError("Required");
@@ -120,13 +182,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                           openMain();
+
+                           checkStatus();
 
                         } else {
                             Toast.makeText(LoginActivity.this, "Error : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     }
+
 
 
                 }).addOnFailureListener(new OnFailureListener() {
@@ -148,4 +212,34 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(this, ForgetPasswordActivity.class));
 
     }
+
+    private void checkStatus() {
+
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("STATUS");
+
+        myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                // Do something with the value
+                if(value.equals("yes"))
+                {
+                    openMain();
+                }
+                else
+                    Toast.makeText(LoginActivity.this, "Admin has not verified your account yet. Please wait ....", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+
+    }
+
+
+
 }
+

@@ -11,16 +11,27 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.collegeapp.authentication.LoginActivity;
+import com.example.collegeapp.authentication.Student;
 import com.example.collegeapp.ebook.EbookActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,17 +40,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavController navController;
 
 
+
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
     private FirebaseAuth auth;
 
+    private FirebaseDatabase db;
+    private DatabaseReference ref;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db=FirebaseDatabase.getInstance();
+
+        ref=db.getReference();
+
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         navController = Navigation.findNavController(this, R.id.fragment_layout);
@@ -87,15 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
 
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(auth.getCurrentUser()==null)
-            openLogin();
-
-    }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -146,5 +156,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+
+
     }
+
+
 }
